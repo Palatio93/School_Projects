@@ -16,7 +16,7 @@ int main(void){ // Games
   printf("Tu saldo inicial es %d\n", money);
   if (Player_Choice == 1){
     do {
-      printf("Que quieres jugar?\n 1. Volad \n 2. Cho Han\n 3. Carta Alta\n 4. Ruleta\n");
+      printf("Que quieres jugar?\n 1. Volado \n 2. Cho Han\n 3. Carta Alta\n 4. Ruleta\n");
       scanf("%d", &Game_of_choice);
       printf("\033[0m");
       switch (Game_of_choice) {
@@ -30,7 +30,9 @@ int main(void){ // Games
             flip_coin(Guess, Bet);
             printf("\nQuieres seguir jugando?\n 1. Sí \t Cualquier tecla No\n");
             scanf("%d", &keep_playing_game);
-          } while(keep_playing_game == 1);
+            if (money == 0)
+              printf("Te has quedado sin dinero.\n");
+          } while(keep_playing_game == 1 && money > 0);
         break;
         case 2: // Cho Han
           do {
@@ -42,7 +44,9 @@ int main(void){ // Games
             Cho_Han(Guess, Bet);
             printf("\nQuieres seguir jugando?\n 1. Sí \t Cualquier tecla No\n");
             scanf("%d", &keep_playing_game);
-          } while(keep_playing_game == 1);
+            if (money == 0)
+              printf("Te has quedado sin dinero.\n");
+          } while(keep_playing_game == 1 && money > 0);
         break;
         case 3: //  High Card
           do {
@@ -52,7 +56,9 @@ int main(void){ // Games
             High_Card(Bet);
             printf("\nQuieres seguir jugando?\n 1. Sí \t Cualquier tecla No\n");
             scanf("%d", &keep_playing_game);
-          } while(keep_playing_game == 1);
+            if (money == 0)
+              printf("Te has quedado sin dinero.\n");
+          } while(keep_playing_game == 1 && money > 0);
         break;
         case 4: // Roulette
           printf("Bienvenido a la ruleta.\n");
@@ -62,13 +68,17 @@ int main(void){ // Games
             Roulette(Bet);
             printf("\nQuieres seguir jugando?\n 1. Sí \t Cualquier tecla No\n");
             scanf("%d", &keep_playing_game);
-          } while(keep_playing_game == 1);
+            if (money == 0)
+              printf("Te has quedado sin dinero.\n");
+          } while(keep_playing_game == 1 && money > 0);
         break;
       }
       printf("\033[1;36m"); // Color
       printf("\nQuieres seguir jugando en el casino?\n 1. Sí \t Cualquier tecla No\n");
       scanf("%d", &keep_playing_casino);
-    } while (keep_playing_casino == 1);
+      if (money == 0)
+        printf("Te has quedado sin dinero.\n");
+    } while (keep_playing_casino == 1 && money > 0);
     } else
         printf("\033[1;36m"); // Color
         printf("\nQue tengas buen dia.\n");

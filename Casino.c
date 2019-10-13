@@ -29,7 +29,9 @@ int main(void){ // Games
             flip_coin(Guess, Bet);
             printf("\nYou want to stay in this game?\n 1 for Yes \t Any key for No\n");
             scanf("%d", &keep_playing_game);
-          } while(keep_playing_game == 1);
+            if (money == 0)
+              printf("You've run out of money.\n");
+          } while(keep_playing_game == 1 && money > 0);
         break;
         case 2: // Cho Han
           do {
@@ -41,7 +43,9 @@ int main(void){ // Games
             Cho_Han(Guess, Bet);
             printf("\nYou want to stay in this game?\n 1 for Yes \t Any key for No\n");
             scanf("%d", &keep_playing_game);
-          } while(keep_playing_game == 1);
+            if (money == 0)
+              printf("You've run out of money.\n");
+          } while(keep_playing_game == 1 && money > 0);
         break;
         case 3: //  High Card
           do {
@@ -51,7 +55,9 @@ int main(void){ // Games
             High_Card(Bet);
             printf("\nYou want to stay in this game?\n 1 for Yes \t Any key for No\n");
             scanf("%d", &keep_playing_game);
-          } while(keep_playing_game == 1);
+            if (money == 0)
+              printf("You've run out of money.\n");
+          } while(keep_playing_game == 1 && money > 0);
         break;
         case 4: // Roulette
           printf("Welcome to Roulette\n");
@@ -61,13 +67,17 @@ int main(void){ // Games
             Roulette(Bet);
             printf("\nYou want to stay in this game?\n 1 for Yes \t Any key for No\n");
             scanf("%d", &keep_playing_game);
-          } while(keep_playing_game == 1);
+            if (money == 0)
+              printf("You've run out of money.\n");
+          } while(keep_playing_game == 1 money > 0);
         break;
       }
       printf("\033[1;36m"); // Color
       printf("\nYou want to stay in the casino?\n 1 for Yes \t Any key for No\n");
       scanf("%d", &keep_playing_casino);
-    } while (keep_playing_casino == 1);
+      if (money == 0)
+        printf("You've run out of money.\n");
+    } while (keep_playing_casino == 1 && money > 0);
   } else
       printf("\033[1;36m"); // Color
       printf("\nHave a nice day.\n");
