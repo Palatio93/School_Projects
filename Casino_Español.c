@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <time.h>
+#include <time.h> // Libreria para rand
 #include <stdlib.h>
-#include <unistd.h>
+#include <unistd.h> // Libreria para sleep
 
 int money = 100; // Inicia el juego con 100 monedas
 void flip_coin(int, int); // Prototipo para volado
@@ -29,28 +29,28 @@ int main(void){ // Inician los juegos
             printf("Coloca tu apuesta por favor.\n"); // Pide por la apuesta
             scanf("%d", &Bet);  // Lee la apuesta
             printf("Aguila es 1 y Sol es 2.\n");  // Da las instrucciones para el juego
-            printf("Aguila o sol?.\n");
+            printf("Aguila o sol?\n");
             scanf("%d", &Guess);  // Lee la decision de apuesta
             flip_coin(Guess, Bet);  // Inicia el juego de volado
-            printf("\nQuieres seguir jugando?\n Ingresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
+            printf("\nQuieres seguir jugando volado?\n Ingresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
             scanf("%d", &keep_playing_game);  // Lee el valor para seguir jugando
-            if (money == 0) // Revisa si aun tiene saldo el usuario
+            if (money == 0 && keep_playing_game == 1) // Revisa si aun tiene saldo el usuario
               printf("Te has quedado sin dinero.\n");
           } while(keep_playing_game == 1 && money > 0); // Condicion para seguir jugando
         break;
         case 2: // Cho Han
           do {
             printf("--------------------------------------------------\n"); // Linea para separar
-            printf("Cho Han es un juego donde se tiran dos dados, y el resultado es la suma de ambos dados, ya sea par o impar.\n"); // Explica el juego
+            printf("Cho Han es un juego donde se tiran dos dados, y se apuesta por la suma de ambos dados, ya sea par o impar.\n"); // Explica el juego
             printf("Coloca tu apuesta por favor.\n"); // Pide la apuesta al usuario
             scanf("%d", &Bet);
             printf("Suma impar es 1\t Suma par es 2\n"); // Indica como ingresar la decision
             printf("Par o impar?\n"); // Pide la decision de apuesta al usuario
             scanf("%d", &Guess);
             Cho_Han(Guess, Bet);  // Inicia el juego de Cho Han
-            printf("\nQuieres seguir jugando?\n Ingresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
+            printf("\nQuieres seguir jugando Cho-Han?\n Ingresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
             scanf("%d", &keep_playing_game);
-            if (money == 0) // Revisa si el usuario aun tiene saldo
+            if (money == 0 && keep_playing_game == 1) // Revisa si el usuario aun tiene saldo
               printf("Te has quedado sin dinero.\n");
           } while(keep_playing_game == 1 && money > 0); // Condicion para seguir jugando
         break;
@@ -61,9 +61,9 @@ int main(void){ // Inician los juegos
             printf("Coloca tu apuesta por favor.\n"); // Pide por la apuesta
             scanf("%d", &Bet);
             High_Card(Bet); // Inicia el juego de carta alta
-            printf("\nQuieres seguir jugando?\n Ingresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
+            printf("\nQuieres seguir jugando carta alta?\n Ingresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
             scanf("%d", &keep_playing_game);
-            if (money == 0) // Revisa que tenga saldo el usuario
+            if (money == 0 && keep_playing_game == 1) // Revisa que tenga saldo el usuario
               printf("Te has quedado sin dinero.\n");
           } while(keep_playing_game == 1 && money > 0); // Condicion para seguir jugando
         break;
@@ -74,9 +74,9 @@ int main(void){ // Inician los juegos
             printf("Coloca tu apuesta por favor.\n"); // Pide por la apuesta
             scanf("%d", &Bet);
             Roulette(Bet); // Inicia el juego de ruleta
-            printf("\nQuieres seguir jugando?\n Ingresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
+            printf("\nQuieres seguir jugando en la ruleta?\n Ingresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
             scanf("%d", &keep_playing_game);
-            if (money == 0) // Revisa el saldo del usuario
+            if (money == 0 && keep_playing_game == 1) // Revisa el saldo del usuario
               printf("Te has quedado sin dinero.\n");
           } while(keep_playing_game == 1 && money > 0);
         break;
@@ -94,7 +94,7 @@ int main(void){ // Inician los juegos
     if (keep_playing_casino != 1 || money == 0){  // Condicion para no poder permancer en el casino
       system("clear");
       printf("--------------------------------------------------\n"); // Linea para separar
-      if (money == 0) { // Revisa el saldo del usuario
+      if (money == 0 && keep_playing_casino == 1) { // Revisa el saldo del usuario
         printf("Te has quedado sin dinero.\n");
       }
       printf("Gracias por visitarnos, hasta la proxima.\n");  // Despedida al usuario
@@ -283,11 +283,13 @@ void Roulette(int bet) {
                 printf("Ganaste.\n");
                 money += (bet * 3); // Paga 3 a 1
                 printf("Tu nuevo saldo es de %d.\n", money);
+              } else {
+                printf("Perdiste.\n");  // Usuario pierde
+                money -= bet;
+                printf("Tu nuevo saldo es de %d.\n", money);
               }
             }
-            printf("Perdiste.\n");  // Usuario pierde
-            money -= bet;
-            printf("Tu nuevo saldo es de %d.\n", money);
+
           break;
         }
     } else
