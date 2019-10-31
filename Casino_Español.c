@@ -103,7 +103,7 @@ int main(void){ // Inician los juegos
 }
 
 
-// Creando el juego de volad
+// Creando el juego de volado
 void flip_coin(int guess, int bet) {  // Aguila es 1, Sol es 2
   srand(time(NULL));
   if (money > 0 && bet <= money) {  // Revisa que se tenga para jugar
@@ -197,22 +197,40 @@ void High_Card(int bet) {
 
 // Creando el juego de ruleta
 void Roulette(int bet) {
-  int Player_guess = 0, roulette_guess_type = 0;
+  int Player_guess = 0, roulette_guess_type = 0, winner  = 0;
   int column1[12] = {1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34};  // Primera columna del tapete
   int column2[12] = {2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35};  // Segunda columna del tapete
   int column3[12] = {3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36};  // Tercera columna del tapete
-  printf("  Primera columna \t Segunda Columna \t Tercera columna\n");  // Letrero del tapete
+  int red[18] = {1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36};  // Rojos del tapete
+  int black[18] = {2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35};  // Negros del tapete
   if (money > 0 && bet <= money) { // Revisa que el usuario tenga para jugar
       if (bet > 0) { // Revisa que la apuesta sea valida
-        for (int i=0; i<12; i++) {  // Imprime el tapete
-          printf("\t%d\t\t\t %d\t\t\t %d\n", column1[i], column2[i], column3[i]);
-        }
-        printf("Ingresa el numero del caso por el que apuestas\n 1. Un numero\n 2. Par\n 3. Impar\n 4. Primera columna\n 5. Segunda columna\n 6. Tercera columna\n"); // Imprime las elecciones de caso para jugar
+        printf("  Primera columna \t Segunda Columna \t Tercera columna\n");  // Letrero del tapete
+        /*for (int i=0; i<12; i++) {  // Imprime el tapete
+            printf("\t%d\t\t\t %d\t\t\t %d \t\t\t\n", column1[i], column2[i], column3[i]);
+        }*/
+        // Imprime el tapete
+        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[0], column2[0], column3[0]);
+        printf("\t %d\t\t\t\033[1;31m%d\033[0m\t\t\t%d\t\t\t\n", column1[1], column2[1], column3[1]);
+        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[2], column2[2], column3[2]);
+        printf("\t %d\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[3], column2[3], column3[3]);      // Primeras cuatro columnas
+        printf("  --------------------------------------------------------------\n"); // Linea para separar
+        printf("\t %d\t\t\t\033[1;31m%d\033[0m\t\t\t%d\t\t\t\n", column1[4], column2[4], column3[4]);
+        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[5], column2[5], column3[5]);
+        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[6], column2[6], column3[6]);
+        printf("\t %d\t\t\t\033[1;31m%d\033[0m\t\t\t%d\t\t\t\n", column1[7], column2[7], column3[7]);     // Segundas cuatro columnas
+        printf("  --------------------------------------------------------------\n"); // Linea para separar
+        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[8], column2[8], column3[8]);
+        printf("\t %d\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[9], column2[9], column3[9]);
+        printf("\t %d\t\t\t\033[1;31m%d\033[0m\t\t\t%d\t\t\t\n", column1[10], column2[10], column3[10]);
+        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[11], column2[11], column3[11]);
+        printf("Ingresa el numero del caso por el que apuestas\n 1. Un numero\n 2. Par\n 3. Impar\n 4. Primera columna\n 5. Segunda columna\n 6. Tercera columna\n 7. Rojo \n 8. Negro\n"); // Imprime las elecciones de caso para jugar
         scanf("%d", &roulette_guess_type);
         srand(time(NULL));
         int Result = rand()%37; // Se lanza la bola sobre la ruleta
         switch (roulette_guess_type) {  // Caso de apuesta
           case 1: // Apostando por un solo numero
+            printf("Por acierto, se paga 36 a 1.\n");
             printf("Elige un número entre 0 y 36\n");
             scanf("%d", &Player_guess);
             printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
@@ -226,7 +244,8 @@ void Roulette(int bet) {
               printf("Tu nuevo saldo es de %d.\n", money);
             }
           break;
-          case 2:
+          case 2: // Apuesta por numero par
+            printf("Por acierto se paga 2 a 1.\n");
             printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
             if (Result % 2 == 0){ // Usuario gana
               printf("Ganaste.\n");
@@ -238,7 +257,8 @@ void Roulette(int bet) {
               printf("Tu nuevo saldo es de %d.\n", money);
             }
           break;
-          case 3:
+          case 3: // Apuesta por numero impar
+            printf("Por acierto se paga 2 a 1.\n");
             printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
             if (Result % 2 != 0){ // Usuario gana
               printf("Ganaste.\n");
@@ -250,47 +270,93 @@ void Roulette(int bet) {
               printf("Tu nuevo saldo es de %d.\n", money);
             }
           break;
-          case 4:
+          case 4: // Apuesta por primera columna
+            printf("Por acierto se paga 3 a 1.\n");
             printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
-            for(int i = 0; i<=12; i++){
+            for(int i = 0; i<12; i++){
               if (Result == column1[i]){  // Usuario gana
                 printf("Ganaste.\n");
                 money += (bet * 3); // Paga 3 a 1
                 printf("Tu nuevo saldo es de %d.\n", money);
+                winner = 1;
               }
             }
-            printf("Perdiste.\n");  // Usuario pierde
-            money -= bet;
-            printf("Tu nuevo saldo es de %d.\n", money);
+            if (winner != 1){
+              printf("Perdiste.\n");  // Usuario pierde
+              money -= bet;
+              printf("Tu nuevo saldo es de %d.\n", money);
+          }
           break;
-          case 5:
+          case 5: // Apuesta por segunda columna
+            printf("Por acierto se paga 3 a 1.\n");
             printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
-            for(int i = 0; i<=12; i++){
+            for(int i = 0; i<12; i++){
               if(Result == column2[i]){ // Usuario gana
                 printf("Ganaste.\n");
                 money += (bet * 3); // Paga 3 a 1
                 printf("Tu nuevo saldo es de %d.\n", money);
+                winner = 1;
               }
             }
-            printf("Perdiste.\n");  // Usuario pierde
-            money -= bet;
-            printf("Tu nuevo saldo es de %d.\n", money);
+            if (winner != 1){
+              printf("Perdiste.\n");  // Usuario pierde
+              money -= bet;
+              printf("Tu nuevo saldo es de %d.\n", money);
+          }
           break;
-          case 6:
+          case 6: // Apuesta por tercera columna
+            printf("Por acierto se paga 3 a 1.\n");
             printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
-            for(int i = 0; i<=12; i++){
+            for(int i = 0; i<12; i++){
               if(Result == column3[i]){ // Usuario gana
                 printf("Ganaste.\n");
                 money += (bet * 3); // Paga 3 a 1
                 printf("Tu nuevo saldo es de %d.\n", money);
-              } else {
-                printf("Perdiste.\n");  // Usuario pierde
-                money -= bet;
-                printf("Tu nuevo saldo es de %d.\n", money);
+                winner = 1;
               }
             }
-
+            if (winner != 1){
+              printf("Perdiste.\n");  // Usuario pierde
+              money -= bet;
+              printf("Tu nuevo saldo es de %d.\n", money);
+          }
           break;
+          case 7: // Apuesta por rojo
+            printf("Por acierto se paga 2 a 1.\n");
+            printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
+            for(int i = 0; i<18; i++){
+              if(Result == red[i]){ // Usuario gana
+                printf("Ganaste.\n");
+                money += (bet * 2); // Paga 2 a 1
+                printf("Tu nuevo saldo es de %d.\n", money);
+                winner = 1;
+              }
+            }
+            if (winner != 1){
+              printf("Perdiste.\n");  // Usuario pierde
+              money -= bet;
+              printf("Tu nuevo saldo es de %d.\n", money);
+          }
+          break;
+          case 8: // Apuesta por negro
+            printf("Por acierto se paga 2 a 1.\n");
+            printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
+            for(int i = 0; i<18; i++){
+              if(Result == black[i]){ // Usuario gana
+                printf("Ganaste.\n");
+                money += (bet * 2); // Paga 2 a 1
+                printf("Tu nuevo saldo es de %d.\n", money);
+                winner = 1;
+              }
+            }
+            if (winner != 1){
+              printf("Perdiste.\n");  // Usuario pierde
+              money -= bet;
+              printf("Tu nuevo saldo es de %d.\n", money);
+          }
+          break;
+          default:
+          printf("Eleccion no valida.\n");
         }
     } else
         printf("\nApuesta no valida.\n"); // Indica al usario que no es valida su apuesta
