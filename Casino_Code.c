@@ -1,24 +1,26 @@
 #include <stdio.h>
 #include <time.h> // Libreria para rand
 #include <stdlib.h>
-#include <unistd.h> // Libreria para sleep
+#define RED "\033[1;31m"
+#define RESET "\033[0m"
 
 int money = 100; // Inicia el juego con 100 monedas
 void flip_coin(float, float); // Prototipo para volado
 void Cho_Han(float, float);   // Prototipo para Cho_Han
 void High_Card(float);      // Prototipo para carta Alta
-void Roulette(float);       // Prototipo para ruleta
+void Roulette(float);       // Prototipo para ruleta europea
 
 int main(void){ // Inician los juegos
-  float Guess = 0, Bet = 0, Player_Choice = 0, Game_of_choice = 1, keep_playing_casino = 0, keep_playing_game = 1;
+  float Guess = 0, Player_Choice = 0, Game_of_choice = 1, keep_playing_casino = 0, keep_playing_game = 1;
+  float Bet = 0;
+  system("COLOR");
   printf("\t\t\t\tAtento aviso\n\t\t\tPor favor solo ingresar numeros.\n");
-  sleep(2);
-  printf("\nQuieres jugar en el casino?\nIngresa 1 para Sí, cualquier numero para No\n"); // Pide si quiere jugar
+  printf("\nQuieres jugar en el casino?\nIngresa 1 para Si, cualquier numero para No\n"); // Pide si quiere jugar
   scanf("%f", &Player_Choice);  // Lee el valor del usuario
-  printf("\nTu saldo inicial es %d\n", money);  // Indica el saldo inicial para jugar
-  if (Player_Choice == 1){  // Revisa que el usuario sí quiere jugar
+  if (Player_Choice == 1){  // Revisa que el usuario s� quiere jugar
     do {
-      printf("\nIngresa el número del juego que quieres jugar.\n 1. Volado \n 2. Cho Han\n 3. Carta Alta\n 4. Ruleta\n"); // Pide por el juego que quiere iniciar
+      printf("\nTu saldo es %d\n", money);  // Indica el saldo del usuario
+      printf("\nIngresa el numero del juego que quieres jugar.\n 1. Volado \n 2. Cho Han\n 3. Carta Alta\n 4. Ruleta Europea\n"); // Pide por el juego que quiere iniciar
       scanf("%f", &Game_of_choice); // Lee la eleccion de juego
       switch ((int)Game_of_choice) { // Inicia el selector de juegos
         case 1: // Volado
@@ -31,7 +33,7 @@ int main(void){ // Inician los juegos
             printf("Aguila o sol?\n");
             scanf("%f", &Guess);  // Lee la decision de apuesta
             flip_coin(Guess, Bet);  // Inicia el juego de volado
-            printf("\nQuieres seguir jugando volado?\nIngresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
+            printf("\nQuieres seguir jugando volado?\nIngresa 1 para Si, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
             scanf("%f", &keep_playing_game);  // Lee el valor para seguir jugando
             if (money == 0 && keep_playing_game == 1) // Revisa si aun tiene saldo el usuario
               printf("\nTe has quedado sin dinero.\n");
@@ -47,7 +49,7 @@ int main(void){ // Inician los juegos
             printf("Par o impar?\n"); // Pide la decision de apuesta al usuario
             scanf("%f", &Guess);
             Cho_Han(Guess, Bet);  // Inicia el juego de Cho Han
-            printf("\nQuieres seguir jugando Cho-Han?\nIngresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
+            printf("\nQuieres seguir jugando Cho-Han?\nIngresa 1 para Si, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
             scanf("%f", &keep_playing_game);
             if (money == 0 && keep_playing_game == 1) // Revisa si el usuario aun tiene saldo
               printf("\nTe has quedado sin dinero.\n");
@@ -60,7 +62,7 @@ int main(void){ // Inician los juegos
             printf("Coloca tu apuesta por favor.\n"); // Pide por la apuesta
             scanf("%f", &Bet);
             High_Card(Bet); // Inicia el juego de carta alta
-            printf("\nQuieres seguir jugando carta alta?\nIngresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
+            printf("\nQuieres seguir jugando carta alta?\nIngresa 1 para Si, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
             scanf("%f", &keep_playing_game);
             if (money == 0 && keep_playing_game == 1) // Revisa que tenga saldo el usuario
               printf("\nTe has quedado sin dinero.\n");
@@ -73,7 +75,7 @@ int main(void){ // Inician los juegos
             printf("Coloca tu apuesta por favor.\n"); // Pide por la apuesta
             scanf("%f", &Bet);
             Roulette(Bet); // Inicia el juego de ruleta
-            printf("\nQuieres seguir jugando en la ruleta?\nIngresa 1 para Sí, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
+            printf("\nQuieres seguir jugando en la ruleta?\nIngresa 1 para Si, cualquier numero para No\n"); // Pregunta si quiere seguir jugando el usuario
             scanf("%f", &keep_playing_game);
             if (money == 0 && keep_playing_game == 1) // Revisa el saldo del usuario
               printf("\nTe has quedado sin dinero.\n");
@@ -83,22 +85,21 @@ int main(void){ // Inician los juegos
           printf("\nValor no valido.\n");
       }
       printf("--------------------------------------------------\n"); // Linea para separar
-      printf("\nQuieres seguir jugando en el casino?\nIngresa 1 para Sí, cualquier numero para No\n");  // Pregunta si quiere permanecer en el casino
+      printf("\nQuieres seguir jugando en el casino?\nIngresa 1 para Si, cualquier numero para No\n");  // Pregunta si quiere permanecer en el casino
       scanf("%f", &keep_playing_casino);
     } while (keep_playing_casino == 1 && money > 0);  // Condicion para seguir jugando en el casino
   } else {
         printf("--------------------------------------------------\n"); // Linea para separar
-        printf("\nQue tengas buen dia.\n");
     }
     if (keep_playing_casino != 1 || money == 0){  // Condicion para no poder permancer en el casino
-      system("clear");
+      system("cls");
       printf("--------------------------------------------------\n"); // Linea para separar
       if (money == 0 && keep_playing_casino == 1) { // Revisa el saldo del usuario
         printf("\nTe has quedado sin dinero.\n");
       }
+      printf("\nQue tengas buen dia.\n");
       printf("\nGracias por visitarnos, hasta la proxima.\n");  // Despedida al usuario
     }
-  return 0;
 }
 
 // Creando el juego de volado
@@ -114,9 +115,9 @@ void flip_coin(float guess, float bet) {  // Aguila es 1, Sol es 2
         else
           printf("\nApuestas por sol.\n");  // Le dice al usuario que va por sol
         if (result == 1)
-          printf("Cayó aguila.\n"); // Indica que el resultado fue aguila
+          printf("Cae aguila.\n"); // Indica que el resultado fue aguila
         else
-          printf("Cayó sol.\n");  // Indica que el resultado fue sol
+          printf("Cae sol.\n");  // Indica que el resultado fue sol
         if ((guess == 1 && result == 1) || (guess == 2 && result == 2)){  // Usuario gano
           money += bet;
           printf("\nGanaste.\nTu saldo es de %d.\n", money);
@@ -184,14 +185,15 @@ void High_Card(float bet) {
             printf("\nEs un empate\nTu nuevo saldo es de %d.\n", money);
         }
       } else
-          printf("\nApuesta no válida.\n"); // Indica que la apuesta no es valida
+          printf("\nApuesta no valida.\n"); // Indica que la apuesta no es valida
   } else
       printf("\nSaldo insuficiente.\n"); // Indica que no tiene suficiente saldo para jugar
 }
 
-// Creando el juego de ruleta
+// Creando el juego de ruleta europea
 void Roulette(float bet) {
   bet = (int)bet;   // Transforma a entero
+  int i;
   float Player_guess = 0, roulette_guess_type = 0, winner  = 0;
   int column1[12] = {1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34};  // Primera columna del tapete
   int column2[12] = {2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35};  // Segunda columna del tapete
@@ -201,25 +203,21 @@ void Roulette(float bet) {
   if (money > 0 && bet <= money) { // Revisa que el usuario tenga para jugar
       if (bet > 0) { // Revisa que la apuesta sea valida
         printf("\n  Primera columna \t Segunda Columna \t Tercera columna\n");  // Letrero del tapete
-        /*for (int i=0; i<12; i++) {  // Imprime el tapete
-            printf("\t%d\t\t\t %d\t\t\t %d \t\t\t\n", column1[i], column2[i], column3[i]);
-        }*/
-        // Imprime el tapete
-        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[0], column2[0], column3[0]);
-        printf("\t %d\t\t\t\033[1;31m%d\033[0m\t\t\t%d\t\t\t\n", column1[1], column2[1], column3[1]);
-        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[2], column2[2], column3[2]);
-        printf("\t %d\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[3], column2[3], column3[3]);      // Primeras cuatro columnas
+        printf(RED"\t %d"RESET"\t\t\t%d"RESET RED"\t\t\t%d"RESET" \t\t\t\n", column1[0], column2[0], column3[0]);
+        printf("\t %d\t\t\t"RED"%d"RESET"\t\t\t%d\t\t\t\n", column1[1], column2[1], column3[1]);
+        printf(RED"\t %d"RESET"\t\t\t%d\t\t\t"RED"%d"RESET" \t\t\t\n", column1[2], column2[2], column3[2]);
+        printf("\t %d\t\t\t%d\t\t\t"RED"%d"RESET" \t\t\t\n", column1[3], column2[3], column3[3]);      // Primeras cuatro columnas
         printf("  --------------------------------------------------------------\n"); // Linea para separar
-        printf("\t %d\t\t\t\033[1;31m%d\033[0m\t\t\t%d\t\t\t\n", column1[4], column2[4], column3[4]);
-        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[5], column2[5], column3[5]);
-        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[6], column2[6], column3[6]);
-        printf("\t %d\t\t\t\033[1;31m%d\033[0m\t\t\t%d\t\t\t\n", column1[7], column2[7], column3[7]);     // Segundas cuatro columnas
+        printf("\t %d\t\t\t"RED"%d"RESET"\t\t\t%d\t\t\t\n", column1[4], column2[4], column3[4]);
+        printf(RED"\t %d"RESET"\t\t\t%d"RESET RED"\t\t\t%d"RESET" \t\t\t\n", column1[5], column2[5], column3[5]);
+        printf(RED"\t %d"RESET"\t\t\t%d"RESET RED"\t\t\t%d"RESET" \t\t\t\n", column1[6], column2[6], column3[6]);
+        printf("\t %d\t\t\t"RED"%d"RESET"\t\t\t%d\t\t\t\n", column1[7], column2[7], column3[7]);     // Segundas cuatro columnas
         printf("  --------------------------------------------------------------\n"); // Linea para separar
-        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[8], column2[8], column3[8]);
-        printf("\t %d\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[9], column2[9], column3[9]);
-        printf("\t %d\t\t\t\033[1;31m%d\033[0m\t\t\t%d\t\t\t\n", column1[10], column2[10], column3[10]);
-        printf("\t \033[1;31m%d\033[0m\t\t\t%d\t\t\t\033[1;31m%d\033[0m \t\t\t\n", column1[11], column2[11], column3[11]);
-        printf("\nIngresa el numero del caso por el que apuestas\n 1. Un numero\n 2. Par\n 3. Impar\n 4. Primera columna\n 5. Segunda columna\n 6. Tercera columna\n 7. Rojo \n 8. Negro\n"); // Imprime las elecciones de caso para jugar
+        printf(RED"\t %d"RESET"\t\t\t%d"RESET RED"\t\t\t%d"RESET" \t\t\t\n", column1[8], column2[8], column3[8]);
+        printf("\t %d\t\t\t%d\t\t\t"RED"%d"RESET" \t\t\t\n", column1[9], column2[9], column3[9]);
+        printf("\t %d\t\t\t"RED"%d"RESET"\t\t\t%d\t\t\t\n", column1[10], column2[10], column3[10]);
+        printf(RED"\t %d"RESET"\t\t\t%d"RESET RED"\t\t\t%d"RESET" \t\t\t\n", column1[11], column2[11], column3[11]);
+        printf("\nIngresa el numero del caso por el que apuestas\n 1. Un numero\n 2. Par\n 3. Impar\n 4. Primera columna\n 5. Segunda columna\n 6. Tercera columna\n 7. Rojo \n 8. Blanco\n"); // Imprime las elecciones de caso para jugar
         scanf("%f", &roulette_guess_type);
         roulette_guess_type = (int)roulette_guess_type;
         srand(time(NULL));
@@ -227,7 +225,7 @@ void Roulette(float bet) {
         switch ((int)roulette_guess_type) {  // Caso de apuesta
           case 1: // Apostando por un solo numero
             printf("\nPor acierto, se paga 36 a 1.\n");
-            printf("Elige un número entre 0 y 36\n");
+            printf("Elige un numero entre 0 y 36\n");
             scanf("%f", &Player_guess);
             while (Player_guess < 0 || Player_guess > 36) {
               printf("Ese numero no existe en este juego. Por favor ingresa el correcto.\n");
@@ -268,7 +266,7 @@ void Roulette(float bet) {
           case 4: // Apuesta por primera columna
             printf("\nPor acierto se paga 3 a 1.\n");
             printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
-            for(int i = 0; i<12; i++){
+            for(i = 0; i<12; i++){
               if (Result == column1[i]){  // Usuario gana
                 money += (bet * 3); // Paga 3 a 1
                 printf("\nGanaste.\nTu nuevo saldo es de %d.\n", money);
@@ -283,7 +281,7 @@ void Roulette(float bet) {
           case 5: // Apuesta por segunda columna
             printf("\nPor acierto se paga 3 a 1.\n");
             printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
-            for(int i = 0; i<12; i++){
+            for(i = 0; i<12; i++){
               if(Result == column2[i]){ // Usuario gana
                 money += (bet * 3); // Paga 3 a 1
                 printf("\nGanaste.\nTu nuevo saldo es de %d.\n", money);
@@ -298,7 +296,7 @@ void Roulette(float bet) {
           case 6: // Apuesta por tercera columna
             printf("\nPor acierto se paga 3 a 1.\n");
             printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
-            for(int i = 0; i<12; i++){
+            for(i = 0; i<12; i++){
               if(Result == column3[i]){ // Usuario gana
                 money += (bet * 3); // Paga 3 a 1
                 printf("\nGanaste.\nTu nuevo saldo es de %d.\n", money);
@@ -313,7 +311,7 @@ void Roulette(float bet) {
           case 7: // Apuesta por rojo
             printf("\nPor acierto se paga 2 a 1.\n");
             printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
-            for(int i = 0; i<18; i++){
+            for(i = 0; i<18; i++){
               if(Result == red[i]){ // Usuario gana
                 money += (bet * 2); // Paga 2 a 1
                 printf("\nGanaste.\nTu nuevo saldo es de %d.\n", money);
@@ -325,10 +323,10 @@ void Roulette(float bet) {
               printf("\nPerdiste.\nTu nuevo saldo es de %d.\n", money);
           }
           break;
-          case 8: // Apuesta por negro
+          case 8: // Apuesta por blanco
             printf("\nPor acierto se paga 2 a 1.\n");
             printf("La bola cae en %d.\n", Result);  // Indica en cual numero cayo la bola
-            for(int i = 0; i<18; i++){
+            for(i = 0; i<18; i++){
               if(Result == black[i]){ // Usuario gana
                 money += (bet * 2); // Paga 2 a 1
                 printf("\nGanaste.\nTu nuevo saldo es de %d.\n", money);
